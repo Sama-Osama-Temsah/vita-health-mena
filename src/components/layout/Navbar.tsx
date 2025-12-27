@@ -2,21 +2,24 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Heart } from "lucide-react";
-
-const navLinks = [
-  { name: "Home", path: "/" },
-  { name: "Risk Check", path: "/risk-check" },
-  { name: "How It Works", path: "/how-it-works" },
-  { name: "Features", path: "/features" },
-  { name: "For Middle East", path: "/middle-east" },
-  { name: "About", path: "/about" },
-  { name: "FAQ", path: "/faq" },
-  { name: "Contact", path: "/contact" },
-];
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const navLinks = [
+    { name: t("nav.home"), path: "/" },
+    { name: t("nav.riskCheck"), path: "/risk-check" },
+    { name: t("nav.howItWorks"), path: "/how-it-works" },
+    { name: t("nav.features"), path: "/features" },
+    { name: t("nav.middleEast"), path: "/middle-east" },
+    { name: t("nav.about"), path: "/about" },
+    { name: t("nav.faq"), path: "/faq" },
+    { name: t("nav.contact"), path: "/contact" },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
@@ -47,9 +50,9 @@ export const Navbar = () => {
             ))}
             <div className="relative group">
               <button className="px-3 py-2 rounded-lg text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors duration-200">
-                More
+                {t("nav.more")}
               </button>
-              <div className="absolute top-full right-0 mt-2 w-48 bg-card rounded-xl shadow-xl border border-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+              <div className="absolute top-full end-0 mt-2 w-48 bg-card rounded-xl shadow-xl border border-border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                 {navLinks.slice(5).map((link) => (
                   <Link
                     key={link.path}
@@ -67,10 +70,11 @@ export const Navbar = () => {
             </div>
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:flex items-center gap-3">
+          {/* Language Switcher & CTA Button */}
+          <div className="hidden md:flex items-center gap-2">
+            <LanguageSwitcher />
             <Button variant="hero" size="default" asChild>
-              <Link to="/risk-check">Check Your Risk</Link>
+              <Link to="/risk-check">{t("nav.checkRisk")}</Link>
             </Button>
           </div>
 
@@ -101,10 +105,13 @@ export const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
+              <div className="px-4 py-3">
+                <LanguageSwitcher />
+              </div>
               <div className="pt-4 px-4">
                 <Button variant="hero" size="lg" className="w-full" asChild>
                   <Link to="/risk-check" onClick={() => setIsOpen(false)}>
-                    Check Your Risk
+                    {t("nav.checkRisk")}
                   </Link>
                 </Button>
               </div>

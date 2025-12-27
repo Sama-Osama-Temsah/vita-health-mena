@@ -14,19 +14,12 @@ import {
   Activity,
   Heart,
   User,
-  Utensils,
-  Moon
+  Utensils
 } from "lucide-react";
-
-const steps = [
-  { id: 1, title: "Personal Info", icon: User },
-  { id: 2, title: "Health History", icon: Heart },
-  { id: 3, title: "Lifestyle", icon: Activity },
-  { id: 4, title: "Diet", icon: Utensils },
-  { id: 5, title: "Results", icon: CheckCircle },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const RiskCheck = () => {
+  const { t, isRTL } = useLanguage();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     age: "",
@@ -41,6 +34,14 @@ const RiskCheck = () => {
     processedFood: "",
     sleep: [7],
   });
+
+  const steps = [
+    { id: 1, title: t("riskCheck.step1"), icon: User },
+    { id: 2, title: t("riskCheck.step2"), icon: Heart },
+    { id: 3, title: t("riskCheck.step3"), icon: Activity },
+    { id: 4, title: t("riskCheck.step4"), icon: Utensils },
+    { id: 5, title: t("riskCheck.step5"), icon: CheckCircle },
+  ];
 
   const progress = ((currentStep - 1) / (steps.length - 1)) * 100;
 
@@ -57,7 +58,6 @@ const RiskCheck = () => {
   };
 
   const calculateRisk = () => {
-    // Simplified risk calculation for demo
     let riskScore = 15;
     if (formData.familyHistory === "yes") riskScore += 20;
     if (parseInt(formData.age) > 45) riskScore += 15;
@@ -68,10 +68,21 @@ const RiskCheck = () => {
   };
 
   const getRiskLevel = (score: number) => {
-    if (score < 30) return { level: "Low", color: "text-success", bg: "bg-success-light" };
-    if (score < 60) return { level: "Moderate", color: "text-warning", bg: "bg-accent-light" };
-    return { level: "High", color: "text-destructive", bg: "bg-destructive/10" };
+    if (score < 30) return { level: t("riskCheck.lowRisk"), color: "text-success", bg: "bg-success-light" };
+    if (score < 60) return { level: t("riskCheck.moderateRisk"), color: "text-warning", bg: "bg-accent-light" };
+    return { level: t("riskCheck.highRisk"), color: "text-destructive", bg: "bg-destructive/10" };
   };
+
+  const recommendations = [
+    t("riskCheck.rec1"),
+    t("riskCheck.rec2"),
+    t("riskCheck.rec3"),
+    t("riskCheck.rec4"),
+    t("riskCheck.rec5"),
+  ];
+
+  const NextIcon = isRTL ? ArrowLeft : ArrowRight;
+  const BackIcon = isRTL ? ArrowRight : ArrowLeft;
 
   return (
     <Layout>
@@ -80,10 +91,10 @@ const RiskCheck = () => {
           {/* Header */}
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Diabetes Risk Assessment
+              {t("riskCheck.title")}
             </h1>
             <p className="text-muted-foreground">
-              Answer a few questions to get your personalized risk score
+              {t("riskCheck.subtitle")}
             </p>
           </div>
 
@@ -120,23 +131,23 @@ const RiskCheck = () => {
               {currentStep === 1 && (
                 <div className="space-y-6 animate-fade-in">
                   <h2 className="text-xl font-semibold text-foreground mb-6">
-                    Personal Information
+                    {t("riskCheck.personalInfo")}
                   </h2>
                   
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="age">Age</Label>
+                      <Label htmlFor="age">{t("riskCheck.age")}</Label>
                       <Input
                         id="age"
                         type="number"
-                        placeholder="Enter your age"
+                        placeholder={t("riskCheck.agePlaceholder")}
                         value={formData.age}
                         onChange={(e) => setFormData({ ...formData, age: e.target.value })}
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <Label>Gender</Label>
+                      <Label>{t("riskCheck.gender")}</Label>
                       <RadioGroup
                         value={formData.gender}
                         onValueChange={(value) => setFormData({ ...formData, gender: value })}
@@ -144,11 +155,11 @@ const RiskCheck = () => {
                       >
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="male" id="male" />
-                          <Label htmlFor="male" className="cursor-pointer">Male</Label>
+                          <Label htmlFor="male" className="cursor-pointer">{t("riskCheck.male")}</Label>
                         </div>
                         <div className="flex items-center space-x-2">
                           <RadioGroupItem value="female" id="female" />
-                          <Label htmlFor="female" className="cursor-pointer">Female</Label>
+                          <Label htmlFor="female" className="cursor-pointer">{t("riskCheck.female")}</Label>
                         </div>
                       </RadioGroup>
                     </div>
@@ -156,22 +167,22 @@ const RiskCheck = () => {
                   
                   <div className="grid sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <Label htmlFor="weight">Weight (kg)</Label>
+                      <Label htmlFor="weight">{t("riskCheck.weight")}</Label>
                       <Input
                         id="weight"
                         type="number"
-                        placeholder="e.g., 70"
+                        placeholder={t("riskCheck.weightPlaceholder")}
                         value={formData.weight}
                         onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
                       />
                     </div>
                     
                     <div className="space-y-2">
-                      <Label htmlFor="height">Height (cm)</Label>
+                      <Label htmlFor="height">{t("riskCheck.height")}</Label>
                       <Input
                         id="height"
                         type="number"
-                        placeholder="e.g., 175"
+                        placeholder={t("riskCheck.heightPlaceholder")}
                         value={formData.height}
                         onChange={(e) => setFormData({ ...formData, height: e.target.value })}
                       />
@@ -184,11 +195,11 @@ const RiskCheck = () => {
               {currentStep === 2 && (
                 <div className="space-y-6 animate-fade-in">
                   <h2 className="text-xl font-semibold text-foreground mb-6">
-                    Health History
+                    {t("riskCheck.healthHistory")}
                   </h2>
                   
                   <div className="space-y-4">
-                    <Label>Does anyone in your immediate family have diabetes?</Label>
+                    <Label>{t("riskCheck.familyDiabetes")}</Label>
                     <RadioGroup
                       value={formData.familyHistory}
                       onValueChange={(value) => setFormData({ ...formData, familyHistory: value })}
@@ -196,21 +207,21 @@ const RiskCheck = () => {
                     >
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="yes" id="fh-yes" />
-                        <Label htmlFor="fh-yes" className="cursor-pointer flex-1">Yes</Label>
+                        <Label htmlFor="fh-yes" className="cursor-pointer flex-1">{t("riskCheck.yes")}</Label>
                       </div>
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="no" id="fh-no" />
-                        <Label htmlFor="fh-no" className="cursor-pointer flex-1">No</Label>
+                        <Label htmlFor="fh-no" className="cursor-pointer flex-1">{t("riskCheck.no")}</Label>
                       </div>
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="unknown" id="fh-unknown" />
-                        <Label htmlFor="fh-unknown" className="cursor-pointer flex-1">I don't know</Label>
+                        <Label htmlFor="fh-unknown" className="cursor-pointer flex-1">{t("riskCheck.dontKnow")}</Label>
                       </div>
                     </RadioGroup>
                   </div>
                   
                   <div className="space-y-4">
-                    <Label>Have you been diagnosed with high blood pressure?</Label>
+                    <Label>{t("riskCheck.highBloodPressure")}</Label>
                     <RadioGroup
                       value={formData.bloodPressure}
                       onValueChange={(value) => setFormData({ ...formData, bloodPressure: value })}
@@ -218,11 +229,11 @@ const RiskCheck = () => {
                     >
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="yes" id="bp-yes" />
-                        <Label htmlFor="bp-yes" className="cursor-pointer flex-1">Yes</Label>
+                        <Label htmlFor="bp-yes" className="cursor-pointer flex-1">{t("riskCheck.yes")}</Label>
                       </div>
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="no" id="bp-no" />
-                        <Label htmlFor="bp-no" className="cursor-pointer flex-1">No</Label>
+                        <Label htmlFor="bp-no" className="cursor-pointer flex-1">{t("riskCheck.no")}</Label>
                       </div>
                     </RadioGroup>
                   </div>
@@ -233,13 +244,13 @@ const RiskCheck = () => {
               {currentStep === 3 && (
                 <div className="space-y-8 animate-fade-in">
                   <h2 className="text-xl font-semibold text-foreground mb-6">
-                    Lifestyle Habits
+                    {t("riskCheck.lifestyleHabits")}
                   </h2>
                   
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <Label>How many days per week do you exercise?</Label>
-                      <span className="font-semibold text-primary">{formData.physicalActivity[0]} days</span>
+                      <Label>{t("riskCheck.exerciseDays")}</Label>
+                      <span className="font-semibold text-primary">{formData.physicalActivity[0]} {t("riskCheck.days")}</span>
                     </div>
                     <Slider
                       value={formData.physicalActivity}
@@ -249,13 +260,13 @@ const RiskCheck = () => {
                       className="py-4"
                     />
                     <div className="flex justify-between text-sm text-muted-foreground">
-                      <span>0 days</span>
-                      <span>7 days</span>
+                      <span>0 {t("riskCheck.days")}</span>
+                      <span>7 {t("riskCheck.days")}</span>
                     </div>
                   </div>
                   
                   <div className="space-y-4">
-                    <Label>Do you smoke?</Label>
+                    <Label>{t("riskCheck.smoking")}</Label>
                     <RadioGroup
                       value={formData.smoking}
                       onValueChange={(value) => setFormData({ ...formData, smoking: value })}
@@ -263,15 +274,15 @@ const RiskCheck = () => {
                     >
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="yes" id="smoke-yes" />
-                        <Label htmlFor="smoke-yes" className="cursor-pointer flex-1">Yes</Label>
+                        <Label htmlFor="smoke-yes" className="cursor-pointer flex-1">{t("riskCheck.yes")}</Label>
                       </div>
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="no" id="smoke-no" />
-                        <Label htmlFor="smoke-no" className="cursor-pointer flex-1">No</Label>
+                        <Label htmlFor="smoke-no" className="cursor-pointer flex-1">{t("riskCheck.no")}</Label>
                       </div>
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="former" id="smoke-former" />
-                        <Label htmlFor="smoke-former" className="cursor-pointer flex-1">Former smoker</Label>
+                        <Label htmlFor="smoke-former" className="cursor-pointer flex-1">{t("riskCheck.formerSmoker")}</Label>
                       </div>
                     </RadioGroup>
                   </div>
@@ -282,11 +293,11 @@ const RiskCheck = () => {
               {currentStep === 4 && (
                 <div className="space-y-8 animate-fade-in">
                   <h2 className="text-xl font-semibold text-foreground mb-6">
-                    Dietary Habits
+                    {t("riskCheck.dietaryHabits")}
                   </h2>
                   
                   <div className="space-y-4">
-                    <Label>How often do you consume sugary drinks (sodas, juices)?</Label>
+                    <Label>{t("riskCheck.sugaryDrinks")}</Label>
                     <RadioGroup
                       value={formData.sweetDrinks}
                       onValueChange={(value) => setFormData({ ...formData, sweetDrinks: value })}
@@ -294,23 +305,23 @@ const RiskCheck = () => {
                     >
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="daily" id="drink-daily" />
-                        <Label htmlFor="drink-daily" className="cursor-pointer flex-1">Daily</Label>
+                        <Label htmlFor="drink-daily" className="cursor-pointer flex-1">{t("riskCheck.daily")}</Label>
                       </div>
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="weekly" id="drink-weekly" />
-                        <Label htmlFor="drink-weekly" className="cursor-pointer flex-1">Few times a week</Label>
+                        <Label htmlFor="drink-weekly" className="cursor-pointer flex-1">{t("riskCheck.weekly")}</Label>
                       </div>
                       <div className="flex items-center space-x-3 p-4 rounded-lg border border-border hover:border-primary/50 transition-colors">
                         <RadioGroupItem value="rarely" id="drink-rarely" />
-                        <Label htmlFor="drink-rarely" className="cursor-pointer flex-1">Rarely or never</Label>
+                        <Label htmlFor="drink-rarely" className="cursor-pointer flex-1">{t("riskCheck.rarely")}</Label>
                       </div>
                     </RadioGroup>
                   </div>
                   
                   <div className="space-y-4">
                     <div className="flex justify-between">
-                      <Label>Average hours of sleep per night</Label>
-                      <span className="font-semibold text-primary">{formData.sleep[0]} hours</span>
+                      <Label>{t("riskCheck.sleepHours")}</Label>
+                      <span className="font-semibold text-primary">{formData.sleep[0]} {t("riskCheck.hours")}</span>
                     </div>
                     <Slider
                       value={formData.sleep}
@@ -321,8 +332,8 @@ const RiskCheck = () => {
                       className="py-4"
                     />
                     <div className="flex justify-between text-sm text-muted-foreground">
-                      <span>4 hours</span>
-                      <span>12 hours</span>
+                      <span>4 {t("riskCheck.hours")}</span>
+                      <span>12 {t("riskCheck.hours")}</span>
                     </div>
                   </div>
                 </div>
@@ -332,7 +343,7 @@ const RiskCheck = () => {
               {currentStep === 5 && (
                 <div className="text-center animate-fade-in">
                   <h2 className="text-xl font-semibold text-foreground mb-8">
-                    Your Risk Assessment Results
+                    {t("riskCheck.results")}
                   </h2>
                   
                   {(() => {
@@ -345,23 +356,17 @@ const RiskCheck = () => {
                             {score}%
                           </span>
                           <span className={`text-xl font-semibold ${risk.color}`}>
-                            {risk.level} Risk
+                            {risk.level}
                           </span>
                         </div>
                         
-                        <div className="bg-secondary/50 rounded-xl p-6 text-left">
+                        <div className="bg-secondary/50 rounded-xl p-6 text-start">
                           <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
                             <Activity className="w-5 h-5 text-primary" />
-                            Personalized Recommendations
+                            {t("riskCheck.recommendations")}
                           </h3>
                           <ul className="space-y-3">
-                            {[
-                              "Increase physical activity to at least 150 minutes per week",
-                              "Reduce consumption of processed foods and sugary drinks",
-                              "Maintain a healthy sleep schedule of 7-8 hours",
-                              "Schedule regular check-ups with your healthcare provider",
-                              "Consider traditional Middle Eastern diet rich in vegetables and whole grains",
-                            ].map((rec, i) => (
+                            {recommendations.map((rec, i) => (
                               <li key={i} className="flex items-start gap-3 text-muted-foreground">
                                 <CheckCircle className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
                                 <span>{rec}</span>
@@ -372,7 +377,7 @@ const RiskCheck = () => {
                         
                         <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground bg-muted p-4 rounded-xl">
                           <AlertTriangle className="w-4 h-4" />
-                          <span>This is a screening tool, not a diagnosis. Please consult a healthcare professional.</span>
+                          <span>{t("riskCheck.disclaimer")}</span>
                         </div>
                       </div>
                     );
@@ -382,27 +387,57 @@ const RiskCheck = () => {
 
               {/* Navigation */}
               <div className="flex justify-between mt-8 pt-6 border-t border-border">
-                {currentStep > 1 && currentStep < 5 && (
+                {currentStep > 1 && currentStep < 5 ? (
                   <Button variant="outline" onClick={handleBack}>
-                    <ArrowLeft className="w-4 h-4 mr-2" />
-                    Back
+                    <BackIcon className="w-4 h-4" />
+                    {t("riskCheck.back")}
+                  </Button>
+                ) : (
+                  <div />
+                )}
+
+                {currentStep < 4 && (
+                  <Button variant="hero" onClick={handleNext}>
+                    {t("riskCheck.next")}
+                    <NextIcon className="w-4 h-4" />
                   </Button>
                 )}
-                {currentStep === 1 && <div />}
-                {currentStep < 5 && (
-                  <Button variant="hero" onClick={handleNext} className="ml-auto">
-                    {currentStep === 4 ? "Get Results" : "Continue"}
-                    <ArrowRight className="w-4 h-4" />
+
+                {currentStep === 4 && (
+                  <Button variant="hero" onClick={handleNext}>
+                    {t("riskCheck.step5")}
+                    <NextIcon className="w-4 h-4" />
                   </Button>
                 )}
+
                 {currentStep === 5 && (
-                  <Button 
-                    variant="hero" 
-                    onClick={() => setCurrentStep(1)} 
-                    className="mx-auto"
-                  >
-                    Take Assessment Again
-                  </Button>
+                  <div className="flex gap-4 w-full">
+                    <Button
+                      variant="outline"
+                      className="flex-1"
+                      onClick={() => {
+                        setCurrentStep(1);
+                        setFormData({
+                          age: "",
+                          gender: "",
+                          weight: "",
+                          height: "",
+                          familyHistory: "",
+                          bloodPressure: "",
+                          physicalActivity: [3],
+                          smoking: "",
+                          sweetDrinks: "",
+                          processedFood: "",
+                          sleep: [7],
+                        });
+                      }}
+                    >
+                      {t("riskCheck.startOver")}
+                    </Button>
+                    <Button variant="hero" className="flex-1">
+                      {t("riskCheck.downloadReport")}
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>
