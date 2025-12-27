@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import { 
   Heart, 
   Activity, 
-  Shield, 
-  Users, 
   CheckCircle, 
   ArrowRight,
   Sparkles,
@@ -13,60 +11,63 @@ import {
   Lock,
   Zap
 } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 import heroImage from "@/assets/hero-image.jpg";
 
-const features = [
-  {
-    icon: Activity,
-    title: "AI-Powered Prediction",
-    description: "Advanced machine learning algorithms analyze your health data to predict diabetes risk with high accuracy.",
-  },
-  {
-    icon: Globe,
-    title: "Localized for Middle East",
-    description: "Tailored risk factors and recommendations specifically designed for Egyptian and Middle Eastern populations.",
-  },
-  {
-    icon: Lock,
-    title: "Privacy First",
-    description: "Your health data is encrypted and never shared. We follow the strictest data protection standards.",
-  },
-  {
-    icon: Zap,
-    title: "Instant Results",
-    description: "Get your personalized risk assessment in minutes, not days. Take action today.",
-  },
-];
-
-const stats = [
-  { value: "98%", label: "Prediction Accuracy" },
-  { value: "50K+", label: "Users Assessed" },
-  { value: "12+", label: "Health Factors" },
-  { value: "24/7", label: "Available" },
-];
-
-const testimonials = [
-  {
-    name: "Ahmed Hassan",
-    location: "Cairo, Egypt",
-    text: "Vita helped me understand my diabetes risk early. The personalized recommendations have been life-changing.",
-    avatar: "A",
-  },
-  {
-    name: "Fatima Al-Rashid",
-    location: "Dubai, UAE",
-    text: "Finally, a health platform that understands our regional dietary habits and lifestyle factors.",
-    avatar: "F",
-  },
-  {
-    name: "Mohamed Samir",
-    location: "Alexandria, Egypt",
-    text: "The Arabic interface and culturally relevant advice made it easy for my entire family to use.",
-    avatar: "M",
-  },
-];
-
 const Index = () => {
+  const { t, isRTL } = useLanguage();
+
+  const features = [
+    {
+      icon: Activity,
+      title: t("features.ai.title"),
+      description: t("features.ai.description"),
+    },
+    {
+      icon: Globe,
+      title: t("features.local.title"),
+      description: t("features.local.description"),
+    },
+    {
+      icon: Lock,
+      title: t("features.privacy.title"),
+      description: t("features.privacy.description"),
+    },
+    {
+      icon: Zap,
+      title: t("features.instant.title"),
+      description: t("features.instant.description"),
+    },
+  ];
+
+  const stats = [
+    { value: "98%", label: t("stats.accuracy") },
+    { value: "50K+", label: t("stats.users") },
+    { value: "12+", label: t("stats.factors") },
+    { value: "24/7", label: t("stats.available") },
+  ];
+
+  const testimonials = [
+    {
+      name: "Ahmed Hassan",
+      location: "Cairo, Egypt",
+      text: "Vita helped me understand my diabetes risk early. The personalized recommendations have been life-changing.",
+      avatar: "A",
+    },
+    {
+      name: "Fatima Al-Rashid",
+      location: "Dubai, UAE",
+      text: "Finally, a health platform that understands our regional dietary habits and lifestyle factors.",
+      avatar: "F",
+    },
+    {
+      name: "Mohamed Samir",
+      location: "Alexandria, Egypt",
+      text: "The Arabic interface and culturally relevant advice made it easy for my entire family to use.",
+      avatar: "M",
+    },
+  ];
+
   return (
     <Layout>
       {/* Hero Section */}
@@ -77,37 +78,35 @@ const Index = () => {
             <div className="space-y-8 animate-slide-up">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-light text-primary text-sm font-medium">
                 <Sparkles className="w-4 h-4" />
-                AI-Powered Health Prediction
+                {t("hero.badge")}
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
-                Predict & Prevent{" "}
-                <span className="text-gradient-primary">Diabetes</span>{" "}
-                Before It Starts
+                {t("hero.title1")}{" "}
+                <span className="text-gradient-primary">{t("hero.title2")}</span>{" "}
+                {t("hero.title3")}
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground max-w-xl leading-relaxed">
-                Vita uses advanced AI to assess your diabetes risk based on factors 
-                specific to Egyptian and Middle Eastern populations. Take control of 
-                your health today.
+                {t("hero.description")}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button variant="hero" size="xl" asChild>
                   <Link to="/risk-check">
-                    Check Your Risk Free
-                    <ArrowRight className="w-5 h-5" />
+                    {t("hero.cta")}
+                    <ArrowRight className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} />
                   </Link>
                 </Button>
                 <Button variant="hero-outline" size="xl" asChild>
                   <Link to="/how-it-works">
-                    Learn How It Works
+                    {t("hero.learnMore")}
                   </Link>
                 </Button>
               </div>
               
               <div className="flex items-center gap-4 pt-4">
-                <div className="flex -space-x-3">
+                <div className={`flex ${isRTL ? "space-x-reverse" : ""} -space-x-3`}>
                   {["A", "S", "M", "F"].map((letter, i) => (
                     <div
                       key={i}
@@ -119,7 +118,7 @@ const Index = () => {
                 </div>
                 <div className="text-sm">
                   <span className="font-semibold text-foreground">50,000+</span>
-                  <span className="text-muted-foreground"> people assessed</span>
+                  <span className="text-muted-foreground"> {t("hero.assessed")}</span>
                 </div>
               </div>
             </div>
@@ -135,7 +134,7 @@ const Index = () => {
               </div>
               
               {/* Floating Card */}
-              <div className="absolute -bottom-6 -left-6 bg-card rounded-2xl p-5 shadow-xl border border-border animate-float">
+              <div className={`absolute -bottom-6 ${isRTL ? "-right-6" : "-left-6"} bg-card rounded-2xl p-5 shadow-xl border border-border animate-float`}>
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-success-light flex items-center justify-center">
                     <CheckCircle className="w-6 h-6 text-success" />
@@ -172,10 +171,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Choose Vita?
+              {t("features.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Purpose-built for the Middle East with cutting-edge AI technology
+              {t("features.subtitle")}
             </p>
           </div>
           
@@ -205,10 +204,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Simple 3-Step Process
+              {t("howItWorks.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Get your personalized risk assessment in minutes
+              {t("howItWorks.subtitle")}
             </p>
           </div>
           
@@ -216,18 +215,18 @@ const Index = () => {
             {[
               {
                 step: "01",
-                title: "Answer Questions",
-                description: "Complete a simple health questionnaire about your lifestyle, diet, and family history.",
+                title: t("howItWorks.step1.title"),
+                description: t("howItWorks.step1.description"),
               },
               {
                 step: "02",
-                title: "AI Analysis",
-                description: "Our AI processes your data using models trained on Middle Eastern population studies.",
+                title: t("howItWorks.step2.title"),
+                description: t("howItWorks.step2.description"),
               },
               {
                 step: "03",
-                title: "Get Results",
-                description: "Receive your personalized risk score with actionable prevention recommendations.",
+                title: t("howItWorks.step3.title"),
+                description: t("howItWorks.step3.description"),
               },
             ].map((item, index) => (
               <div key={index} className="relative">
@@ -243,7 +242,7 @@ const Index = () => {
                   </p>
                 </div>
                 {index < 2 && (
-                  <div className="hidden md:block absolute top-8 left-[60%] w-[80%] border-t-2 border-dashed border-border" />
+                  <div className={`hidden md:block absolute top-8 ${isRTL ? "right-[60%]" : "left-[60%]"} w-[80%] border-t-2 border-dashed border-border`} />
                 )}
               </div>
             ))}
@@ -252,8 +251,8 @@ const Index = () => {
           <div className="text-center mt-12">
             <Button variant="hero" size="lg" asChild>
               <Link to="/how-it-works">
-                Learn More
-                <ArrowRight className="w-5 h-5" />
+                {t("howItWorks.learnMore")}
+                <ArrowRight className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} />
               </Link>
             </Button>
           </div>
@@ -265,10 +264,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Trusted by Thousands
+              {t("testimonials.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Real stories from real people across the Middle East
+              {t("testimonials.subtitle")}
             </p>
           </div>
           
@@ -302,11 +301,10 @@ const Index = () => {
           <div className="max-w-3xl mx-auto">
             <Heart className="w-16 h-16 mx-auto mb-6 opacity-90" />
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Take Control of Your Health Today
+              {t("cta.title")}
             </h2>
             <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
-              Early detection is key to prevention. Check your diabetes risk now 
-              and get personalized recommendations for a healthier future.
+              {t("cta.description")}
             </p>
             <Button 
               variant="secondary" 
@@ -315,8 +313,8 @@ const Index = () => {
               asChild
             >
               <Link to="/risk-check">
-                Start Free Assessment
-                <ArrowRight className="w-5 h-5" />
+                {t("cta.button")}
+                <ArrowRight className={`w-5 h-5 ${isRTL ? "rotate-180" : ""}`} />
               </Link>
             </Button>
           </div>

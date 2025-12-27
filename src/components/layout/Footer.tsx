@@ -1,22 +1,25 @@
 import { Link } from "react-router-dom";
 import { Heart, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
-
-const footerLinks = {
-  product: [
-    { name: "Risk Assessment", path: "/risk-check" },
-    { name: "How It Works", path: "/how-it-works" },
-    { name: "Features", path: "/features" },
-    { name: "For Middle East", path: "/middle-east" },
-  ],
-  company: [
-    { name: "About Vita", path: "/about" },
-    { name: "Contact Us", path: "/contact" },
-    { name: "FAQ", path: "/faq" },
-    { name: "Privacy Policy", path: "/privacy" },
-  ],
-};
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Footer = () => {
+  const { t } = useLanguage();
+
+  const footerLinks = {
+    product: [
+      { name: t("footer.riskAssessment"), path: "/risk-check" },
+      { name: t("footer.howItWorks"), path: "/how-it-works" },
+      { name: t("footer.features"), path: "/features" },
+      { name: t("footer.forMiddleEast"), path: "/middle-east" },
+    ],
+    company: [
+      { name: t("footer.aboutVita"), path: "/about" },
+      { name: t("footer.contactUs"), path: "/contact" },
+      { name: t("footer.faq"), path: "/faq" },
+      { name: t("footer.privacyPolicy"), path: "/privacy" },
+    ],
+  };
+
   return (
     <footer className="bg-foreground text-background">
       <div className="container mx-auto px-4 py-16">
@@ -30,7 +33,7 @@ export const Footer = () => {
               <span className="text-xl font-bold">Vita</span>
             </Link>
             <p className="text-background/70 mb-6 leading-relaxed">
-              Empowering Egyptians and the Middle East with AI-powered diabetes prediction and prevention tools.
+              {t("footer.description")}
             </p>
             <div className="flex gap-3">
               {[Facebook, Twitter, Instagram, Linkedin].map((Icon, index) => (
@@ -47,7 +50,7 @@ export const Footer = () => {
 
           {/* Product Links */}
           <div>
-            <h4 className="font-semibold text-lg mb-6">Product</h4>
+            <h4 className="font-semibold text-lg mb-6">{t("footer.product")}</h4>
             <ul className="space-y-4">
               {footerLinks.product.map((link) => (
                 <li key={link.path}>
@@ -64,7 +67,7 @@ export const Footer = () => {
 
           {/* Company Links */}
           <div>
-            <h4 className="font-semibold text-lg mb-6">Company</h4>
+            <h4 className="font-semibold text-lg mb-6">{t("footer.company")}</h4>
             <ul className="space-y-4">
               {footerLinks.company.map((link) => (
                 <li key={link.path}>
@@ -81,7 +84,7 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold text-lg mb-6">Contact Us</h4>
+            <h4 className="font-semibold text-lg mb-6">{t("footer.contact")}</h4>
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-background/70">
                 <Mail className="w-5 h-5 text-primary" />
@@ -101,14 +104,14 @@ export const Footer = () => {
 
         <div className="border-t border-background/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-background/50 text-sm">
-            © {new Date().getFullYear()} Vita Health. All rights reserved.
+            © {new Date().getFullYear()} Vita Health. {t("footer.rights")}
           </p>
           <div className="flex gap-6 text-sm text-background/50">
             <Link to="/privacy" className="hover:text-primary transition-colors">
-              Privacy Policy
+              {t("footer.privacyPolicy")}
             </Link>
             <Link to="/privacy" className="hover:text-primary transition-colors">
-              Terms of Service
+              {t("footer.termsOfService")}
             </Link>
           </div>
         </div>
