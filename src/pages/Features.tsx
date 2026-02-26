@@ -15,78 +15,59 @@ import {
   Languages,
   Clock
 } from "lucide-react";
-
-const mainFeatures = [
-  {
-    icon: Brain,
-    title: "AI-Powered Prediction",
-    description: "Our machine learning model analyzes 12+ health factors to predict your diabetes risk with 98% accuracy, giving you insights typically reserved for clinical settings.",
-    highlight: "98% Accuracy",
-  },
-  {
-    icon: Globe,
-    title: "Middle East Focused",
-    description: "Unlike generic tools, Vita is specifically calibrated for Egyptian and Middle Eastern populations, accounting for regional dietary patterns, genetics, and lifestyle factors.",
-    highlight: "Region-Specific",
-  },
-  {
-    icon: Shield,
-    title: "Privacy First",
-    description: "Your health data is encrypted end-to-end and never shared with third parties. We comply with international data protection standards including GDPR.",
-    highlight: "GDPR Compliant",
-  },
-  {
-    icon: Zap,
-    title: "Instant Results",
-    description: "Get your comprehensive risk assessment in under 5 minutes. No waiting for lab results or doctor appointments to understand your risk level.",
-    highlight: "5-Minute Assessment",
-  },
-];
-
-const additionalFeatures = [
-  {
-    icon: HeartPulse,
-    title: "Personalized Recommendations",
-    description: "Receive tailored lifestyle and dietary advice based on your unique risk profile.",
-  },
-  {
-    icon: Languages,
-    title: "Arabic Language Support",
-    description: "Full Arabic interface for comfortable use across the region.",
-  },
-  {
-    icon: Smartphone,
-    title: "Mobile Optimized",
-    description: "Access your risk assessment anytime, anywhere on any device.",
-  },
-  {
-    icon: BarChart3,
-    title: "Progress Tracking",
-    description: "Monitor how your risk changes as you adopt healthier habits.",
-  },
-  {
-    icon: Bell,
-    title: "Health Reminders",
-    description: "Optional reminders to retake assessments and track improvements.",
-  },
-  {
-    icon: Clock,
-    title: "24/7 Availability",
-    description: "Access the platform anytime without scheduling appointments.",
-  },
-  {
-    icon: Users,
-    title: "Family Profiles",
-    description: "Manage assessments for multiple family members in one account.",
-  },
-  {
-    icon: Globe,
-    title: "Educational Resources",
-    description: "Learn about diabetes prevention through curated content.",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Features = () => {
+  const { t } = useLanguage();
+
+  const mainFeatures = [
+    {
+      icon: Brain,
+      title: t("featuresPage.main.ai.title"),
+      description: t("featuresPage.main.ai.description"),
+      highlight: t("featuresPage.main.ai.highlight"),
+    },
+    {
+      icon: Globe,
+      title: t("featuresPage.main.regional.title"),
+      description: t("featuresPage.main.regional.description"),
+      highlight: t("featuresPage.main.regional.highlight"),
+    },
+    {
+      icon: Shield,
+      title: t("featuresPage.main.privacy.title"),
+      description: t("featuresPage.main.privacy.description"),
+      highlight: t("featuresPage.main.privacy.highlight"),
+    },
+    {
+      icon: Zap,
+      title: t("featuresPage.main.instant.title"),
+      description: t("featuresPage.main.instant.description"),
+      highlight: t("featuresPage.main.instant.highlight"),
+    },
+  ];
+
+  const additionalFeatures = [
+    { icon: HeartPulse, title: t("featuresPage.additional.recommendations"), description: t("featuresPage.additional.recommendationsDesc") },
+    { icon: Languages, title: t("featuresPage.additional.arabic"), description: t("featuresPage.additional.arabicDesc") },
+    { icon: Smartphone, title: t("featuresPage.additional.mobile"), description: t("featuresPage.additional.mobileDesc") },
+    { icon: BarChart3, title: t("featuresPage.additional.tracking"), description: t("featuresPage.additional.trackingDesc") },
+    { icon: Bell, title: t("featuresPage.additional.reminders"), description: t("featuresPage.additional.remindersDesc") },
+    { icon: Clock, title: t("featuresPage.additional.availability"), description: t("featuresPage.additional.availabilityDesc") },
+    { icon: Users, title: t("featuresPage.additional.family"), description: t("featuresPage.additional.familyDesc") },
+    { icon: Globe, title: t("featuresPage.additional.education"), description: t("featuresPage.additional.educationDesc") },
+  ];
+
+  const comparisonRows = [
+    [t("featuresPage.comparison.time"), t("featuresPage.comparison.timeVita"), t("featuresPage.comparison.timeTraditional")],
+    [t("featuresPage.comparison.cost"), t("featuresPage.comparison.costVita"), t("featuresPage.comparison.costTraditional")],
+    [t("featuresPage.comparison.calibration"), "✓", "✗"],
+    [t("featuresPage.comparison.arabicSupport"), "✓", t("featuresPage.comparison.arabicTraditional")],
+    [t("featuresPage.comparison.availabilityLabel"), "✓", "✗"],
+    [t("featuresPage.comparison.privacyLabel"), t("featuresPage.comparison.privacyVita"), t("featuresPage.comparison.privacyTraditional")],
+    [t("featuresPage.comparison.tips"), "✓", t("featuresPage.comparison.tipsTraditional")],
+  ];
+
   return (
     <Layout>
       {/* Hero */}
@@ -94,11 +75,10 @@ const Features = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Powerful <span className="text-gradient-primary">Features</span> for Your Health
+              {t("featuresPage.hero.title")} <span className="text-gradient-primary">{t("featuresPage.hero.titleHighlight")}</span> {t("featuresPage.hero.titleEnd")}
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8">
-              Everything you need to understand, monitor, and reduce your diabetes risk, 
-              designed specifically for the Middle East.
+              {t("featuresPage.hero.description")}
             </p>
           </div>
         </div>
@@ -113,7 +93,7 @@ const Features = () => {
                 key={index}
                 className="group relative bg-card rounded-3xl p-8 border border-border hover:border-primary/30 hover:shadow-xl transition-all duration-300 overflow-hidden"
               >
-                <div className="absolute top-4 right-4">
+                <div className="absolute top-4 end-4">
                   <span className="px-3 py-1 rounded-full bg-primary-light text-primary text-xs font-semibold">
                     {feature.highlight}
                   </span>
@@ -138,10 +118,10 @@ const Features = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              And Much More
+              {t("featuresPage.additional.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Comprehensive tools to support your health journey
+              {t("featuresPage.additional.subtitle")}
             </p>
           </div>
 
@@ -171,10 +151,10 @@ const Features = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why Vita is Different
+              {t("featuresPage.comparison.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              See how we compare to traditional risk assessment methods
+              {t("featuresPage.comparison.subtitle")}
             </p>
           </div>
 
@@ -182,21 +162,13 @@ const Features = () => {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left py-4 px-4 font-semibold text-foreground">Feature</th>
-                  <th className="text-center py-4 px-4 font-semibold text-primary">Vita</th>
-                  <th className="text-center py-4 px-4 font-semibold text-muted-foreground">Traditional Methods</th>
+                  <th className="text-start py-4 px-4 font-semibold text-foreground">{t("featuresPage.comparison.feature")}</th>
+                  <th className="text-center py-4 px-4 font-semibold text-primary">{t("featuresPage.comparison.vita")}</th>
+                  <th className="text-center py-4 px-4 font-semibold text-muted-foreground">{t("featuresPage.comparison.traditional")}</th>
                 </tr>
               </thead>
               <tbody>
-                {[
-                  ["Time to Results", "5 minutes", "Days to weeks"],
-                  ["Cost", "Free", "Consultation fees"],
-                  ["Regional Calibration", "✓", "✗"],
-                  ["Arabic Support", "✓", "Limited"],
-                  ["24/7 Availability", "✓", "✗"],
-                  ["Privacy Protection", "End-to-end encrypted", "Varies"],
-                  ["Personalized Tips", "✓", "Generic advice"],
-                ].map((row, index) => (
+                {comparisonRows.map((row, index) => (
                   <tr key={index} className="border-b border-border">
                     <td className="py-4 px-4 text-foreground">{row[0]}</td>
                     <td className="py-4 px-4 text-center text-primary font-medium">{row[1]}</td>
@@ -213,11 +185,10 @@ const Features = () => {
       <section className="py-20 md:py-28 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Experience These Features Today
+            {t("featuresPage.cta.title")}
           </h2>
           <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-            Start your free risk assessment and discover how Vita can help you 
-            take control of your health.
+            {t("featuresPage.cta.description")}
           </p>
           <Button 
             variant="secondary" 
@@ -226,7 +197,7 @@ const Features = () => {
             asChild
           >
             <Link to="/risk-check">
-              Start Free Assessment
+              {t("common.freeAssessment")}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </Button>

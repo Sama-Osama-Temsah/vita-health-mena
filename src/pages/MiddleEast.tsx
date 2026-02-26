@@ -11,51 +11,83 @@ import {
   CheckCircle,
   AlertCircle
 } from "lucide-react";
-
-const statistics = [
-  { value: "17%", label: "Diabetes prevalence in Egypt" },
-  { value: "1 in 5", label: "Adults affected in Middle East" },
-  { value: "50%", label: "Cases remain undiagnosed" },
-  { value: "#1", label: "Fastest growing health concern" },
-];
-
-const regionalFactors = [
-  {
-    icon: Utensils,
-    title: "Dietary Patterns",
-    description: "Traditional Middle Eastern cuisine, while rich in healthy options, has evolved to include more processed foods and sugary beverages, increasing diabetes risk.",
-    factors: ["High rice and bread consumption", "Sweet tea culture", "Growing fast food adoption", "Traditional sweets and desserts"],
-  },
-  {
-    icon: Users,
-    title: "Genetic Predisposition",
-    description: "Research shows that populations in the MENA region may have genetic factors that increase susceptibility to type 2 diabetes.",
-    factors: ["Family history patterns", "Genetic markers specific to region", "Consanguinity effects", "Ethnic susceptibility factors"],
-  },
-  {
-    icon: TrendingUp,
-    title: "Lifestyle Changes",
-    description: "Rapid urbanization and modernization have led to more sedentary lifestyles and reduced physical activity across the region.",
-    factors: ["Decreased walking habits", "Car-dependent transportation", "Office-based work increase", "Less outdoor activities"],
-  },
-  {
-    icon: Heart,
-    title: "Health Awareness",
-    description: "Many cases go undiagnosed due to limited awareness about diabetes symptoms and the importance of regular screening.",
-    factors: ["Delayed symptom recognition", "Stigma around chronic disease", "Limited screening access", "Prevention knowledge gaps"],
-  },
-];
-
-const countries = [
-  { name: "Egypt", prevalence: "17.2%", flag: "🇪🇬" },
-  { name: "Saudi Arabia", prevalence: "18.7%", flag: "🇸🇦" },
-  { name: "UAE", prevalence: "16.3%", flag: "🇦🇪" },
-  { name: "Kuwait", prevalence: "22.0%", flag: "🇰🇼" },
-  { name: "Qatar", prevalence: "15.5%", flag: "🇶🇦" },
-  { name: "Bahrain", prevalence: "16.6%", flag: "🇧🇭" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const MiddleEast = () => {
+  const { t } = useLanguage();
+
+  const statistics = [
+    { value: "17%", label: t("middleEastPage.stats.prevalence") },
+    { value: "1 in 5", label: t("middleEastPage.stats.adults") },
+    { value: "50%", label: t("middleEastPage.stats.undiagnosed") },
+    { value: "#1", label: t("middleEastPage.stats.growing") },
+  ];
+
+  const regionalFactors = [
+    {
+      icon: Utensils,
+      title: t("middleEastPage.factors.diet.title"),
+      description: t("middleEastPage.factors.diet.description"),
+      factors: [
+        t("middleEastPage.factors.diet.item1"),
+        t("middleEastPage.factors.diet.item2"),
+        t("middleEastPage.factors.diet.item3"),
+        t("middleEastPage.factors.diet.item4"),
+      ],
+    },
+    {
+      icon: Users,
+      title: t("middleEastPage.factors.genetics.title"),
+      description: t("middleEastPage.factors.genetics.description"),
+      factors: [
+        t("middleEastPage.factors.genetics.item1"),
+        t("middleEastPage.factors.genetics.item2"),
+        t("middleEastPage.factors.genetics.item3"),
+        t("middleEastPage.factors.genetics.item4"),
+      ],
+    },
+    {
+      icon: TrendingUp,
+      title: t("middleEastPage.factors.lifestyle.title"),
+      description: t("middleEastPage.factors.lifestyle.description"),
+      factors: [
+        t("middleEastPage.factors.lifestyle.item1"),
+        t("middleEastPage.factors.lifestyle.item2"),
+        t("middleEastPage.factors.lifestyle.item3"),
+        t("middleEastPage.factors.lifestyle.item4"),
+      ],
+    },
+    {
+      icon: Heart,
+      title: t("middleEastPage.factors.awareness.title"),
+      description: t("middleEastPage.factors.awareness.description"),
+      factors: [
+        t("middleEastPage.factors.awareness.item1"),
+        t("middleEastPage.factors.awareness.item2"),
+        t("middleEastPage.factors.awareness.item3"),
+        t("middleEastPage.factors.awareness.item4"),
+      ],
+    },
+  ];
+
+  const countries = [
+    { name: t("middleEastPage.countries.egypt"), prevalence: "17.2%", flag: "🇪🇬" },
+    { name: t("middleEastPage.countries.saudi"), prevalence: "18.7%", flag: "🇸🇦" },
+    { name: t("middleEastPage.countries.uae"), prevalence: "16.3%", flag: "🇦🇪" },
+    { name: t("middleEastPage.countries.kuwait"), prevalence: "22.0%", flag: "🇰🇼" },
+    { name: t("middleEastPage.countries.qatar"), prevalence: "15.5%", flag: "🇶🇦" },
+    { name: t("middleEastPage.countries.bahrain"), prevalence: "16.6%", flag: "🇧🇭" },
+  ];
+
+  const whyItems = [
+    t("middleEastPage.why.item1"),
+    t("middleEastPage.why.item2"),
+    t("middleEastPage.why.item3"),
+    t("middleEastPage.why.item4"),
+    t("middleEastPage.why.item5"),
+    t("middleEastPage.why.item6"),
+  ];
+
   return (
     <Layout>
       {/* Hero */}
@@ -64,14 +96,13 @@ const MiddleEast = () => {
           <div className="text-center max-w-3xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-light text-accent text-sm font-medium mb-6">
               <MapPin className="w-4 h-4" />
-              Designed for Our Region
+              {t("middleEastPage.hero.badge")}
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Built for <span className="text-gradient-primary">Egyptians</span> & the Middle East
+              {t("middleEastPage.hero.title")} <span className="text-gradient-primary">{t("middleEastPage.hero.titleHighlight")}</span> {t("middleEastPage.hero.titleEnd")}
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8">
-              The Middle East faces one of the highest diabetes rates globally. Vita is 
-              specifically designed to address the unique health challenges of our region.
+              {t("middleEastPage.hero.description")}
             </p>
           </div>
         </div>
@@ -98,10 +129,10 @@ const MiddleEast = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Understanding Regional Risk Factors
+              {t("middleEastPage.factors.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Our AI model accounts for factors unique to the Middle Eastern population
+              {t("middleEastPage.factors.subtitle")}
             </p>
           </div>
 
@@ -143,10 +174,10 @@ const MiddleEast = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Diabetes Prevalence Across the Region
+              {t("middleEastPage.prevalence.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Adult diabetes rates in Middle Eastern countries (IDF Atlas 2023)
+              {t("middleEastPage.prevalence.subtitle")}
             </p>
           </div>
 
@@ -171,23 +202,14 @@ const MiddleEast = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Why Vita is Different for Our Region
+                {t("middleEastPage.why.title")}
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
-                Generic diabetes risk calculators miss crucial factors specific to our 
-                population. Vita was built from the ground up with Middle Eastern health 
-                data and cultural context.
+                {t("middleEastPage.why.description")}
               </p>
               
               <ul className="space-y-4">
-                {[
-                  "Trained on Egyptian and Middle Eastern health studies",
-                  "Accounts for regional dietary patterns (rice, bread, sweets)",
-                  "Considers genetic factors common in MENA populations",
-                  "Arabic language support for accessibility",
-                  "Culturally relevant lifestyle recommendations",
-                  "Understands local healthcare context",
-                ].map((item, index) => (
+                {whyItems.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
                     <CheckCircle className="w-6 h-6 text-success flex-shrink-0 mt-0.5" />
                     <span className="text-foreground">{item}</span>
@@ -199,15 +221,13 @@ const MiddleEast = () => {
             <div className="bg-accent-light rounded-3xl p-8 md:p-12">
               <AlertCircle className="w-12 h-12 text-accent mb-6" />
               <h3 className="text-2xl font-bold text-foreground mb-4">
-                Did You Know?
+                {t("middleEastPage.didYouKnow")}
               </h3>
               <p className="text-muted-foreground mb-6">
-                Studies show that standard diabetes risk calculators developed for 
-                Western populations can underestimate risk by up to 30% when applied 
-                to Middle Eastern individuals.
+                {t("middleEastPage.didYouKnowText")}
               </p>
               <p className="text-foreground font-medium">
-                That's why Vita uses region-specific models for more accurate predictions.
+                {t("middleEastPage.didYouKnowCta")}
               </p>
             </div>
           </div>
@@ -218,11 +238,10 @@ const MiddleEast = () => {
       <section className="py-20 md:py-28 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Get Your Accurate Risk Assessment
+            {t("middleEastPage.cta.title")}
           </h2>
           <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-            Join thousands of Egyptians and Middle Easterners who have already 
-            discovered their true diabetes risk with Vita.
+            {t("middleEastPage.cta.description")}
           </p>
           <Button 
             variant="secondary" 
@@ -231,7 +250,7 @@ const MiddleEast = () => {
             asChild
           >
             <Link to="/risk-check">
-              Check Your Risk Now
+              {t("middleEastPage.cta.button")}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </Button>

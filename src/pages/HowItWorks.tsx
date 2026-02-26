@@ -11,70 +11,57 @@ import {
   Users,
   Database
 } from "lucide-react";
-
-const steps = [
-  {
-    number: "01",
-    icon: ClipboardList,
-    title: "Complete Health Questionnaire",
-    description: "Answer simple questions about your age, weight, family history, lifestyle habits, and dietary patterns. The questionnaire takes only 5-7 minutes.",
-    details: [
-      "Personal health metrics (BMI, blood pressure)",
-      "Family history of diabetes",
-      "Physical activity levels",
-      "Dietary habits specific to Middle Eastern cuisine",
-    ],
-  },
-  {
-    number: "02",
-    icon: Cpu,
-    title: "AI-Powered Analysis",
-    description: "Our advanced machine learning model processes your data using algorithms trained on health studies from Egyptian and Middle Eastern populations.",
-    details: [
-      "12+ risk factors analyzed simultaneously",
-      "Models trained on regional health data",
-      "Considers genetic and environmental factors",
-      "Real-time processing in seconds",
-    ],
-  },
-  {
-    number: "03",
-    icon: FileBarChart,
-    title: "Personalized Risk Report",
-    description: "Receive a comprehensive risk assessment with your predicted diabetes probability and actionable recommendations tailored to your profile.",
-    details: [
-      "Clear risk percentage score",
-      "Breakdown of contributing factors",
-      "Culturally relevant lifestyle tips",
-      "Recommended next steps",
-    ],
-  },
-];
-
-const technologies = [
-  {
-    icon: Database,
-    title: "Big Data Analytics",
-    description: "Analyzing millions of health records to identify patterns",
-  },
-  {
-    icon: Cpu,
-    title: "Machine Learning",
-    description: "Advanced algorithms that improve with more data",
-  },
-  {
-    icon: Shield,
-    title: "Secure Processing",
-    description: "End-to-end encryption for all health data",
-  },
-  {
-    icon: Users,
-    title: "Regional Expertise",
-    description: "Models calibrated for Middle Eastern populations",
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HowItWorks = () => {
+  const { t } = useLanguage();
+
+  const steps = [
+    {
+      number: "01",
+      icon: ClipboardList,
+      title: t("howItWorksPage.step1.title"),
+      description: t("howItWorksPage.step1.description"),
+      details: [
+        t("howItWorksPage.step1.detail1"),
+        t("howItWorksPage.step1.detail2"),
+        t("howItWorksPage.step1.detail3"),
+        t("howItWorksPage.step1.detail4"),
+      ],
+    },
+    {
+      number: "02",
+      icon: Cpu,
+      title: t("howItWorksPage.step2.title"),
+      description: t("howItWorksPage.step2.description"),
+      details: [
+        t("howItWorksPage.step2.detail1"),
+        t("howItWorksPage.step2.detail2"),
+        t("howItWorksPage.step2.detail3"),
+        t("howItWorksPage.step2.detail4"),
+      ],
+    },
+    {
+      number: "03",
+      icon: FileBarChart,
+      title: t("howItWorksPage.step3.title"),
+      description: t("howItWorksPage.step3.description"),
+      details: [
+        t("howItWorksPage.step3.detail1"),
+        t("howItWorksPage.step3.detail2"),
+        t("howItWorksPage.step3.detail3"),
+        t("howItWorksPage.step3.detail4"),
+      ],
+    },
+  ];
+
+  const technologies = [
+    { icon: Database, title: t("howItWorksPage.tech.bigData"), description: t("howItWorksPage.tech.bigDataDesc") },
+    { icon: Cpu, title: t("howItWorksPage.tech.ml"), description: t("howItWorksPage.tech.mlDesc") },
+    { icon: Shield, title: t("howItWorksPage.tech.secure"), description: t("howItWorksPage.tech.secureDesc") },
+    { icon: Users, title: t("howItWorksPage.tech.regional"), description: t("howItWorksPage.tech.regionalDesc") },
+  ];
+
   return (
     <Layout>
       {/* Hero */}
@@ -82,15 +69,14 @@ const HowItWorks = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              How Vita <span className="text-gradient-primary">Works</span>
+              {t("howItWorksPage.hero.title")} <span className="text-gradient-primary">{t("howItWorksPage.hero.titleHighlight")}</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8">
-              Understanding your diabetes risk has never been easier. Our AI-powered 
-              platform delivers accurate predictions in just minutes.
+              {t("howItWorksPage.hero.description")}
             </p>
             <Button variant="hero" size="lg" asChild>
               <Link to="/risk-check">
-                Start Your Assessment
+                {t("howItWorksPage.hero.cta")}
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>
@@ -147,11 +133,10 @@ const HowItWorks = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Powered by Advanced Technology
+              {t("howItWorksPage.tech.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              We combine cutting-edge AI with regional health expertise to deliver 
-              accurate, relevant predictions.
+              {t("howItWorksPage.tech.description")}
             </p>
           </div>
 
@@ -181,11 +166,10 @@ const HowItWorks = () => {
         <div className="container mx-auto px-4">
           <div className="bg-primary rounded-3xl p-8 md:p-16 text-center text-primary-foreground">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to Know Your Risk?
+              {t("common.readyToKnow")}
             </h2>
             <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
-              Take the first step towards a healthier future. Our assessment is 
-              free, confidential, and takes just 5 minutes.
+              {t("common.readyDescription")}
             </p>
             <Button 
               variant="secondary" 
@@ -194,7 +178,7 @@ const HowItWorks = () => {
               asChild
             >
               <Link to="/risk-check">
-                Start Free Assessment
+                {t("common.freeAssessment")}
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </Button>
