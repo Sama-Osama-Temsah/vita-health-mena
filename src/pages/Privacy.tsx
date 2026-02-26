@@ -8,72 +8,43 @@ import {
   FileCheck,
   CheckCircle
 } from "lucide-react";
-
-const securityFeatures = [
-  {
-    icon: Lock,
-    title: "End-to-End Encryption",
-    description: "All data transmitted between your device and our servers is encrypted using industry-standard TLS 1.3 protocol.",
-  },
-  {
-    icon: Server,
-    title: "Secure Data Storage",
-    description: "Your health information is stored in encrypted databases with multiple layers of security controls.",
-  },
-  {
-    icon: Eye,
-    title: "Privacy by Design",
-    description: "We collect only the minimum data necessary to provide accurate risk assessments. No unnecessary tracking.",
-  },
-  {
-    icon: Trash2,
-    title: "Data Deletion Rights",
-    description: "You can request complete deletion of your data at any time. We honor all deletion requests within 48 hours.",
-  },
-  {
-    icon: FileCheck,
-    title: "GDPR Compliant",
-    description: "We follow European data protection standards, providing you with full control over your personal information.",
-  },
-  {
-    icon: Shield,
-    title: "No Third-Party Sharing",
-    description: "Your health data is never sold or shared with advertisers, insurers, or any third parties.",
-  },
-];
-
-const dataUsage = [
-  {
-    category: "What We Collect",
-    items: [
-      "Age, gender, height, and weight",
-      "Family health history (yes/no responses only)",
-      "Lifestyle habits (exercise, diet, sleep)",
-      "Email address (if you choose to create an account)",
-    ],
-  },
-  {
-    category: "What We DON'T Collect",
-    items: [
-      "Your real name or ID documents",
-      "Precise location data",
-      "Medical records or test results",
-      "Financial or payment information",
-      "Biometric data",
-    ],
-  },
-  {
-    category: "How We Use Your Data",
-    items: [
-      "Calculate your personalized risk score",
-      "Provide relevant health recommendations",
-      "Improve our AI model accuracy (anonymized)",
-      "Send assessment reminders (if opted in)",
-    ],
-  },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Privacy = () => {
+  const { t } = useLanguage();
+
+  const securityFeatures = [
+    { icon: Lock, title: t("privacyPage.security.encryption"), description: t("privacyPage.security.encryptionDesc") },
+    { icon: Server, title: t("privacyPage.security.storage"), description: t("privacyPage.security.storageDesc") },
+    { icon: Eye, title: t("privacyPage.security.design"), description: t("privacyPage.security.designDesc") },
+    { icon: Trash2, title: t("privacyPage.security.deletion"), description: t("privacyPage.security.deletionDesc") },
+    { icon: FileCheck, title: t("privacyPage.security.gdpr"), description: t("privacyPage.security.gdprDesc") },
+    { icon: Shield, title: t("privacyPage.security.noSharing"), description: t("privacyPage.security.noSharingDesc") },
+  ];
+
+  const dataUsage = [
+    {
+      category: t("privacyPage.data.collect"),
+      items: [t("privacyPage.data.collect1"), t("privacyPage.data.collect2"), t("privacyPage.data.collect3"), t("privacyPage.data.collect4")],
+    },
+    {
+      category: t("privacyPage.data.dontCollect"),
+      items: [t("privacyPage.data.dontCollect1"), t("privacyPage.data.dontCollect2"), t("privacyPage.data.dontCollect3"), t("privacyPage.data.dontCollect4"), t("privacyPage.data.dontCollect5")],
+    },
+    {
+      category: t("privacyPage.data.usage"),
+      items: [t("privacyPage.data.usage1"), t("privacyPage.data.usage2"), t("privacyPage.data.usage3"), t("privacyPage.data.usage4")],
+    },
+  ];
+
+  const rights = [
+    { title: t("privacyPage.rights.access"), description: t("privacyPage.rights.accessDesc") },
+    { title: t("privacyPage.rights.rectification"), description: t("privacyPage.rights.rectificationDesc") },
+    { title: t("privacyPage.rights.erasure"), description: t("privacyPage.rights.erasureDesc") },
+    { title: t("privacyPage.rights.portability"), description: t("privacyPage.rights.portabilityDesc") },
+    { title: t("privacyPage.rights.object"), description: t("privacyPage.rights.objectDesc") },
+  ];
+
   return (
     <Layout>
       {/* Hero */}
@@ -84,11 +55,10 @@ const Privacy = () => {
               <Shield className="w-10 h-10 text-primary" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Privacy & Data <span className="text-gradient-primary">Security</span>
+              {t("privacyPage.hero.title")} <span className="text-gradient-primary">{t("privacyPage.hero.titleHighlight")}</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground">
-              Your health data is sacred. We've built Vita with privacy at its core, 
-              ensuring your information stays protected and under your control.
+              {t("privacyPage.hero.description")}
             </p>
           </div>
         </div>
@@ -99,10 +69,10 @@ const Privacy = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              How We Protect Your Data
+              {t("privacyPage.security.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Multiple layers of security to keep your health information safe
+              {t("privacyPage.security.subtitle")}
             </p>
           </div>
 
@@ -132,10 +102,10 @@ const Privacy = () => {
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Transparency in Data Handling
+              {t("privacyPage.data.title")}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Clear information about what data we collect and how we use it
+              {t("privacyPage.data.subtitle")}
             </p>
           </div>
 
@@ -167,32 +137,11 @@ const Privacy = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8 text-center">
-              Your Privacy Rights
+              {t("privacyPage.rights.title")}
             </h2>
             
             <div className="space-y-6">
-              {[
-                {
-                  title: "Right to Access",
-                  description: "You can request a copy of all personal data we hold about you at any time.",
-                },
-                {
-                  title: "Right to Rectification",
-                  description: "If any of your data is inaccurate, you can request corrections.",
-                },
-                {
-                  title: "Right to Erasure",
-                  description: "You can request complete deletion of your data from our systems.",
-                },
-                {
-                  title: "Right to Data Portability",
-                  description: "You can receive your data in a structured, commonly used format.",
-                },
-                {
-                  title: "Right to Object",
-                  description: "You can opt out of data processing for certain purposes at any time.",
-                },
-              ].map((right, index) => (
+              {rights.map((right, index) => (
                 <div
                   key={index}
                   className="flex gap-4 p-6 bg-card rounded-xl border border-border"
@@ -216,17 +165,16 @@ const Privacy = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-2xl font-bold text-foreground mb-4">
-              Questions About Your Privacy?
+              {t("privacyPage.contact.title")}
             </h2>
             <p className="text-muted-foreground mb-6">
-              Our Data Protection Officer is here to help with any privacy-related 
-              inquiries or to process your data requests.
+              {t("privacyPage.contact.description")}
             </p>
             <div className="inline-block bg-primary-light rounded-xl px-6 py-4">
               <p className="text-primary font-medium">privacy@vitahealth.me</p>
             </div>
             <p className="text-sm text-muted-foreground mt-6">
-              Last updated: December 2024
+              {t("privacyPage.contact.updated")}
             </p>
           </div>
         </div>

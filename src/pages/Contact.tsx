@@ -15,45 +15,11 @@ import {
   HeadphonesIcon
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
-const contactInfo = [
-  {
-    icon: Mail,
-    title: "Email Us",
-    details: "hello@vitahealth.me",
-    subtext: "We reply within 24 hours",
-  },
-  {
-    icon: Phone,
-    title: "Call Us",
-    details: "+20 123 456 7890",
-    subtext: "Sun-Thu, 9AM-6PM (Cairo)",
-  },
-  {
-    icon: MapPin,
-    title: "Visit Us",
-    details: "Smart Village, Building B4",
-    subtext: "Cairo, Egypt",
-  },
-  {
-    icon: Clock,
-    title: "Working Hours",
-    details: "Sunday - Thursday",
-    subtext: "9:00 AM - 6:00 PM",
-  },
-];
-
-const contactReasons = [
-  "General Inquiry",
-  "Technical Support",
-  "Partnership Opportunity",
-  "Media & Press",
-  "Privacy Request",
-  "Other",
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Contact = () => {
   const { toast } = useToast();
+  const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -62,18 +28,30 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const contactInfo = [
+    { icon: Mail, title: t("contactPage.info.email"), details: t("contactPage.info.emailAddress"), subtext: t("contactPage.info.emailSub") },
+    { icon: Phone, title: t("contactPage.info.phone"), details: t("contactPage.info.phoneNumber"), subtext: t("contactPage.info.phoneSub") },
+    { icon: MapPin, title: t("contactPage.info.visit"), details: t("contactPage.info.visitAddress"), subtext: t("contactPage.info.visitSub") },
+    { icon: Clock, title: t("contactPage.info.hours"), details: t("contactPage.info.hoursDetail"), subtext: t("contactPage.info.hoursSub") },
+  ];
+
+  const contactReasons = [
+    t("contactPage.form.reasons.general"),
+    t("contactPage.form.reasons.technical"),
+    t("contactPage.form.reasons.partnership"),
+    t("contactPage.form.reasons.media"),
+    t("contactPage.form.reasons.privacy"),
+    t("contactPage.form.reasons.other"),
+  ];
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1500));
-    
     toast({
-      title: "Message sent successfully!",
-      description: "We'll get back to you within 24 hours.",
+      title: t("contactPage.form.success"),
+      description: t("contactPage.form.successDesc"),
     });
-    
     setFormData({ name: "", email: "", reason: "", message: "" });
     setIsSubmitting(false);
   };
@@ -88,11 +66,10 @@ const Contact = () => {
               <MessageSquare className="w-10 h-10 text-primary" />
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Get in <span className="text-gradient-primary">Touch</span>
+              {t("contactPage.hero.title")} <span className="text-gradient-primary">{t("contactPage.hero.titleHighlight")}</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground">
-              Have questions about Vita? We'd love to hear from you. Our team is 
-              ready to help with any inquiries.
+              {t("contactPage.hero.description")}
             </p>
           </div>
         </div>
@@ -119,37 +96,37 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Form & Map */}
+      {/* Contact Form & Support */}
       <section className="py-20 md:py-28">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Form */}
             <div className="bg-card rounded-3xl p-8 md:p-10 border border-border shadow-large">
               <h2 className="text-2xl font-bold text-foreground mb-2">
-                Send Us a Message
+                {t("contactPage.form.title")}
               </h2>
               <p className="text-muted-foreground mb-8">
-                Fill out the form below and we'll respond as soon as possible.
+                {t("contactPage.form.subtitle")}
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name</Label>
+                    <Label htmlFor="name">{t("contactPage.form.name")}</Label>
                     <Input
                       id="name"
-                      placeholder="Your name"
+                      placeholder={t("contactPage.form.namePlaceholder")}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email Address</Label>
+                    <Label htmlFor="email">{t("contactPage.form.email")}</Label>
                     <Input
                       id="email"
                       type="email"
-                      placeholder="you@example.com"
+                      placeholder={t("contactPage.form.emailPlaceholder")}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
@@ -158,7 +135,7 @@ const Contact = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="reason">Reason for Contact</Label>
+                  <Label htmlFor="reason">{t("contactPage.form.reason")}</Label>
                   <select
                     id="reason"
                     value={formData.reason}
@@ -166,7 +143,7 @@ const Contact = () => {
                     className="w-full h-11 rounded-lg border border-input bg-background px-3 py-2 text-foreground ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                     required
                   >
-                    <option value="">Select a reason</option>
+                    <option value="">{t("contactPage.form.reasonPlaceholder")}</option>
                     {contactReasons.map((reason) => (
                       <option key={reason} value={reason}>
                         {reason}
@@ -176,10 +153,10 @@ const Contact = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
+                  <Label htmlFor="message">{t("contactPage.form.message")}</Label>
                   <Textarea
                     id="message"
-                    placeholder="Tell us how we can help..."
+                    placeholder={t("contactPage.form.messagePlaceholder")}
                     rows={5}
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -195,10 +172,10 @@ const Contact = () => {
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
-                    "Sending..."
+                    t("contactPage.form.sending")
                   ) : (
                     <>
-                      Send Message
+                      {t("contactPage.form.send")}
                       <Send className="w-5 h-5" />
                     </>
                   )}
@@ -211,18 +188,17 @@ const Contact = () => {
               <div className="bg-primary-light rounded-3xl p-8 md:p-10">
                 <HeadphonesIcon className="w-12 h-12 text-primary mb-6" />
                 <h3 className="text-2xl font-bold text-foreground mb-4">
-                  Need Immediate Help?
+                  {t("contactPage.support.title")}
                 </h3>
                 <p className="text-muted-foreground mb-6">
-                  Our support team is available to assist you with any urgent 
-                  questions about your risk assessment or the platform.
+                  {t("contactPage.support.description")}
                 </p>
                 <ul className="space-y-3">
                   {[
-                    "Response within 24 hours",
-                    "Arabic and English support",
-                    "Technical assistance available",
-                    "Privacy inquiries prioritized",
+                    t("contactPage.support.item1"),
+                    t("contactPage.support.item2"),
+                    t("contactPage.support.item3"),
+                    t("contactPage.support.item4"),
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-3 text-foreground">
                       <CheckCircle className="w-5 h-5 text-success" />
@@ -234,11 +210,10 @@ const Contact = () => {
 
               <div className="bg-card rounded-3xl p-8 md:p-10 border border-border">
                 <h3 className="text-xl font-bold text-foreground mb-4">
-                  Partnership Inquiries
+                  {t("contactPage.partnership.title")}
                 </h3>
                 <p className="text-muted-foreground mb-4">
-                  Interested in partnering with Vita? We work with healthcare 
-                  providers, insurers, employers, and wellness organizations.
+                  {t("contactPage.partnership.description")}
                 </p>
                 <p className="text-foreground font-medium">
                   partnerships@vitahealth.me
@@ -247,11 +222,10 @@ const Contact = () => {
 
               <div className="bg-card rounded-3xl p-8 md:p-10 border border-border">
                 <h3 className="text-xl font-bold text-foreground mb-4">
-                  Media & Press
+                  {t("contactPage.media.title")}
                 </h3>
                 <p className="text-muted-foreground mb-4">
-                  For media inquiries, interview requests, or press materials, 
-                  please reach out to our communications team.
+                  {t("contactPage.media.description")}
                 </p>
                 <p className="text-foreground font-medium">
                   press@vitahealth.me
